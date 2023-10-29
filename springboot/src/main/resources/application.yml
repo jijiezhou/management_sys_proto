@@ -1,0 +1,14 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${ip}:3306/management_system?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8
+    username: root
+    password: ZJJ201225zjj
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+ip: localhost

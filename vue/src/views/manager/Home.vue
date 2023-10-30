@@ -39,7 +39,7 @@
       <el-card style="width: 50%">
         <div style="margin-bottom: 15px; font-size: 20px; font-weight: bold">系统公告</div>
         <el-collapse v-model="activeName" accordion>
-          <el-collapse-item  v-for="(item, index) in notices" :key="item.id" :name="index + ''">
+          <el-collapse-item v-for="(item, index) in notices" :key="item.id" :name="index + ''">
             <template slot="title">
               <div style="display: flex; align-items: center; width: 100%">
                 <h4 style="flex: 1">{{ item.title }}</h4>
@@ -52,6 +52,27 @@
       </el-card>
     </div>
 
+    <div style="display: flex; margin: 10px 0">
+      <el-card style="width: 50%; margin-right: 10px">
+        <div slot="header" class="clearfix">
+          File upload/download
+        </div>
+        <div>
+          <el-upload
+              accept="png"
+              action="https://localhost:9090/file/upload"
+              :file-list="fileList"
+              :headers="{token: user.token }"
+              list-type="picture"
+              :on-success="handleFileUpload">
+            <el-button size="small" type="primary">Upload</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </div>
+      </el-card>
+
+    </div>
+
   </div>
 </template>
 
@@ -62,7 +83,9 @@ export default {
     return {
       user: JSON.parse(localStorage.getItem('honey-user') || '{}'),
       notices: [],
-      activeName: '0'
+      activeName: '0',
+      fileList: [],
+      user: JSON.parse(localStorage.getItem('honey-user') || '{}')
     }
   },
   created() {
@@ -73,6 +96,9 @@ export default {
       this.$request.get('/notice/selectUserData').then(res => {
         this.notices = res.data
       })
+    },
+    handleFileUpload(response, file, fileList){
+      this.fileList = fileList
     }
   }
 }

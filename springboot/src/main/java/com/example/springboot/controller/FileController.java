@@ -30,7 +30,6 @@ public class FileController {
     private static final String ROOT_PATH =  System.getProperty("user.dir") + File.separator + "files";  // ~\project\honey2024-master\files
 
     @HoneyLogs(operation = "文件", type = LogType.ADD)
-    @AuthAccess
     @PostMapping("/upload")
     public Result upload(MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();  // original name of file
@@ -59,10 +58,13 @@ public class FileController {
 //      response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));  // 附件下载
         response.addHeader("Content-Disposition", "inline;filename=" + URLEncoder.encode(fileName, "UTF-8"));  // 预览
         String filePath = ROOT_PATH  + File.separator + fileName;
+        //if file not exit
         if (!FileUtil.exist(filePath)) {
             return;
         }
+        //read the file, return byte[]
         byte[] bytes = FileUtil.readBytes(filePath);
+        //outputStream
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(bytes);  // array is byte array, which is the byte stream array of the file
         outputStream.flush();

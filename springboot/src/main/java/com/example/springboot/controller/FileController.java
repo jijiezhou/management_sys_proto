@@ -30,6 +30,7 @@ public class FileController {
     private static final String ROOT_PATH =  System.getProperty("user.dir") + File.separator + "files";  // ~\project\honey2024-master\files
 
     @HoneyLogs(operation = "文件", type = LogType.ADD)
+    @AuthAccess
     @PostMapping("/upload")
     public Result upload(MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();  // original name of file

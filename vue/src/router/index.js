@@ -31,7 +31,7 @@ const routes = [
   },
   { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },
   { path: '/register', name: 'Register', meta: { name: '注册' }, component: () => import('../views/Register.vue') },
-  { path: '*', name: '404', meta: { name: '无法访问' }, component: () => import('../views/404.vue') },
+  { path: '*', name: '404', meta: { name: '无法访问' }, component: () => import('../views/404.vue') }, //other situations we not consider all 404
 ]
 
 const router = new VueRouter({
@@ -41,14 +41,17 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // to 是到达的路由信息
-  // from 是开源的路由信息
-  // next 是帮助我们跳转路由的函数
+  // to -> route info to
+  // from -> route info from
+  // next -> router helper function
+  //admin path
   let adminPaths = ['/user']
   let user = JSON.parse(localStorage.getItem('honey-user') || '{}')
 
+  //If the currently logged-in user is not an administrator, and the current arrival path is a path that only administrators
+  // have permission to access, then at this time I will let the user go to a page without permission and prevent him from accessing the actual page.
   if (user.role !== '管理员' && adminPaths.includes(to.path)) {
-    // 如果当前登录的用户不是管理员，然后当前的到达的路径是管理员才有权限访问的路径，那这个时候我就让用户去到一个没有权限的页面，不让他访问实际的页面
+    //if current user not admin and want to visit the pages only open to admin, then route guide to page 403
     next('/403')
   } else {
     next()

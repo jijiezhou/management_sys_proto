@@ -51,6 +51,11 @@ public class WebController {
         return Result.success(user);
     }
 
+    /**
+     * register
+     * @param user
+     * @return
+     */
     @HoneyLogs(operation = "用户", type = LogType.REGISTER)
     @AuthAccess
     @PostMapping("/register")

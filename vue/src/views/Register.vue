@@ -6,27 +6,27 @@
       </div>
       <div style="flex: 1; display: flex; align-items: center; justify-content: center">
         <el-form :model="user" style="width: 80%" :rules="rules" ref="registerRef">
-          <div style="font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 20px">欢迎注册后台管理系统</div>
+          <div style="font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 20px">Management System</div>
           <el-form-item prop="username">
-            <el-input prefix-icon="el-icon-user" size="medium" placeholder="请输入账号" v-model="user.username"></el-input>
+            <el-input prefix-icon="el-icon-user" size="medium" placeholder="please input username" v-model="user.username"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input prefix-icon="el-icon-lock" size="medium" show-password placeholder="请输入密码" v-model="user.password"></el-input>
+            <el-input prefix-icon="el-icon-lock" size="medium" show-password placeholder="please input password" v-model="user.password"></el-input>
           </el-form-item>
           <el-form-item prop="confirmPass">
-            <el-input prefix-icon="el-icon-lock" size="medium" show-password placeholder="请确认密码" v-model="user.confirmPass"></el-input>
+            <el-input prefix-icon="el-icon-lock" size="medium" show-password placeholder="please validate username" v-model="user.confirmPass"></el-input>
           </el-form-item>
           <el-form-item prop="role">
             <el-radio-group v-model="user.role">
-              <el-radio label="用户"></el-radio>
-              <el-radio label="商家"></el-radio>
+              <el-radio label="User"></el-radio>
+              <el-radio label="Merchant"></el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="info" style="width: 100%" @click="register">注 册</el-button>
+            <el-button type="info" style="width: 100%" @click="register">Register</el-button>
           </el-form-item>
           <div style="display: flex">
-            <div style="flex: 1">已经有账号了？请 <span style="color: #6e77f2; cursor: pointer" @click="$router.push('/login')">登录</span></div>
+            <div style="flex: 1">Already have account？<span style="color: #6e77f2; cursor: pointer" @click="$router.push('/login')">Log in</span></div>
           </div>
         </el-form>
       </div>
@@ -58,16 +58,16 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
+          { required: true, message: 'please input username', trigger: 'blur' },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+          { required: true, message: 'please input password', trigger: 'blur' },
         ],
         confirmPass: [
           { validator: validatePassword, trigger: 'blur' }
         ],
         role: [
-          { required: true, message: '请选择角色', trigger: 'blur' },
+          { required: true, message: 'please select role', trigger: 'blur' },
         ],
       }
     }
@@ -79,11 +79,11 @@ export default {
     register() {
       this.$refs['registerRef'].validate((valid) => {
         if (valid) {
-          // 验证通过
+          // validation pass
           this.$request.post('/register', this.user).then(res => {
             if (res.code === '200') {
               this.$router.push('/login')
-              this.$message.success('注册成功')
+              this.$message.success('register success')
             } else {
               this.$message.error(res.msg)
             }

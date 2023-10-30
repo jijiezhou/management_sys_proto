@@ -45,12 +45,12 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         User dbUser = selectByUsername(user.getUsername());
         if (dbUser == null) {
             // 抛出一个自定义的异常
-            throw new ServiceException("用户名或密码错误");
+            throw new ServiceException("Username or password incorrect");
         }
         if (!user.getPassword().equals(dbUser.getPassword())) {
-            throw new ServiceException("用户名或密码错误");
+            throw new ServiceException("Username or password incorrect");
         }
-        // 生成token
+        // create token
         String token = TokenUtils.createToken(dbUser.getId().toString(), dbUser.getPassword());
         dbUser.setToken(token);
         return dbUser;

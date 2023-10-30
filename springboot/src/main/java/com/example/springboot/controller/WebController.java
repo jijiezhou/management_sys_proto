@@ -22,9 +22,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 功能：提供接口返回数据
- * 作者：程序员青戈
- * 日期：2023/8/13 15:55
+ * func：提供接口返回数据
+ * author：jijiez
+ * date：2023/10/29
  */
 @RestController
 public class WebController {
@@ -45,7 +45,7 @@ public class WebController {
     @PostMapping("/login")
     public Result login(@RequestBody User user) {
         if (StrUtil.isBlank(user.getUsername()) || StrUtil.isBlank(user.getPassword())) {
-            return Result.error("数据输入不合法");
+            return Result.error("Data input illegal");
         }
         user = userService.login(user);
         return Result.success(user);
@@ -56,10 +56,10 @@ public class WebController {
     @PostMapping("/register")
     public Result register(@RequestBody User user) {
         if (StrUtil.isBlank(user.getUsername()) || StrUtil.isBlank(user.getPassword()) || StrUtil.isBlank(user.getRole())) {
-            return Result.error("数据输入不合法");
+            return Result.error("Data input illegal");
         }
         if (user.getUsername().length() > 10 || user.getPassword().length() > 20) {
-            return Result.error("数据输入不合法");
+            return Result.error("Data input illegal");
         }
         user = userService.register(user);
         return Result.success(user);

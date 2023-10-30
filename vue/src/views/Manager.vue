@@ -1,28 +1,28 @@
 <template>
   <div>
     <el-container>
-      <!--    侧边栏  -->
+      <!--    Aside  -->
       <el-aside :width="asideWidth" style="min-height: 100vh; background-color: #001529">
         <div style="height: 60px; color: white; display: flex; align-items: center; justify-content: center">
           <img src="@/assets/logo1.png" alt="" style="width: 40px; height: 40px">
-          <span class="logo-title" v-show="!isCollapse">honey2024</span>
+          <span class="logo-title" v-show="!isCollapse">management sys</span>
         </div>
 
         <el-menu :default-openeds="['info']" :collapse="isCollapse" :collapse-transition="false" router background-color="#001529" text-color="rgba(255, 255, 255, 0.65)"
                  active-text-color="#fff" style="border: none" :default-active="$route.path">
           <el-menu-item index="/home">
             <i class="el-icon-s-home"></i>
-            <span slot="title">系统首页</span>
+            <span slot="title">System Main Page</span>
           </el-menu-item>
           <el-submenu index="info" >
             <template slot="title">
               <i class="el-icon-menu"></i>
-              <span>信息管理</span>
+              <span>Info Management</span>
             </template>
-            <el-menu-item index="/user" v-if="user.role === '管理员'">用户信息</el-menu-item>
-            <el-menu-item index="/news">新闻信息</el-menu-item>
+            <el-menu-item index="/user" v-if="user.role === '管理员'">User Info</el-menu-item>
+            <el-menu-item index="/news">News Info</el-menu-item>
             <el-menu-item index="/notice" v-if="user.role === '管理员'">系统公告</el-menu-item>
-            <el-menu-item index="/logs" v-if="user.role === '管理员'">系统日志</el-menu-item>
+            <el-menu-item index="/logs" v-if="user.role === '管理员'">System Log</el-menu-item>
             <el-menu-item index="/charts" v-if="user.role === '管理员'">数据统计</el-menu-item>
             <el-menu-item index="/orders">订单管理</el-menu-item>
           </el-submenu>
@@ -31,12 +31,12 @@
       </el-aside>
 
       <el-container>
-        <!--        头部区域-->
+        <!-- Header -->
         <el-header>
 
           <i :class="collapseIcon" style="font-size: 26px" @click="handleCollapse"></i>
           <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-left: 20px">
-            <el-breadcrumb-item :to="{ path: '/' }">主页</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">Main Page</el-breadcrumb-item>
             <el-breadcrumb-item :to="{ path: $route.path }">{{ $route.meta.name }}</el-breadcrumb-item>
           </el-breadcrumb>
 
@@ -48,16 +48,16 @@
                 <span>{{ user.name }}</span>
               </div>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="$router.push('/person')">个人信息</el-dropdown-item>
-                <el-dropdown-item @click.native="$router.push('/password')">修改密码</el-dropdown-item>
-                <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
+                <el-dropdown-item @click.native="$router.push('/person')">Personal Info</el-dropdown-item>
+                <el-dropdown-item @click.native="$router.push('/password')">Change Password</el-dropdown-item>
+                <el-dropdown-item @click.native="logout">Log Out</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
 
         </el-header>
 
-        <!--        主体区域-->
+        <!-- Main -->
         <el-main>
           <router-view @update:user="updateUser" />
         </el-main>

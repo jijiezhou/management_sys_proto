@@ -32,14 +32,13 @@
       </div>
     </div>
 
-
     <el-dialog title="忘记密码" :visible.sync="forgetPassDialogVis" width="30%">
       <el-form :model="forgetUserForm" label-width="80px" style="padding-right: 20px">
-        <el-form-item label="用户名">
-          <el-input v-model="forgetUserForm.username" autocomplete="off" placeholder="请输入用户名"></el-input>
+        <el-form-item label="Username">
+          <el-input v-model="forgetUserForm.username" autocomplete="off" placeholder="please enter username"></el-input>
         </el-form-item>
-        <el-form-item label="手机号">
-          <el-input v-model="forgetUserForm.phone" autocomplete="off" placeholder="请输入手机号"></el-input>
+        <el-form-item label="Phone">
+          <el-input v-model="forgetUserForm.phone" autocomplete="off" placeholder="Please enter phone number"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -71,7 +70,7 @@ export default {
         callback()
       }
     }
-
+    //test alot
     return {
       forgetUserForm: {},   // 忘记密码的表单数据
       forgetPassDialogVis: false,

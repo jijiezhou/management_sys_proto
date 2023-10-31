@@ -42,6 +42,7 @@ export default {
   name: "Person",
   data() {
     return {
+      //get from web
       user: JSON.parse(localStorage.getItem('honey-user') || '{}')
     }
   },

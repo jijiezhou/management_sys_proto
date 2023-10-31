@@ -60,7 +60,7 @@ export default {
           // Update user information in browser cache
           localStorage.setItem('honey-user', JSON.stringify(this.user))
 
-          // 触发父级的数据更新
+          //Trigger data update of parent
           this.$emit('update:user', this.user)
         } else {
           this.$message.error(res.msg)
@@ -69,7 +69,6 @@ export default {
     },
     handleAvatarSuccess(response, file, fileList) {
       // Replace the user's avatar attribute with the link to the uploaded image
-      console.log(response.data)
       this.user.avatar = response.data
     },
   }

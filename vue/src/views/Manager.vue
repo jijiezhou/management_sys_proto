@@ -89,8 +89,10 @@ export default {
     }
   },
   methods: {
-    updateUser(user) {   // 获取子组件传过来的数据  更新当前页面的数据
-      this.user = JSON.parse(JSON.stringify(user))  // 让父级的对象跟子级的对象毫无关联
+    //parent Get the data passed by the child and update the data of the current page
+    updateUser(user) {
+      //Let the parent object have no relationship with the child object
+      this.user = JSON.parse(JSON.stringify(user))
     },
     logout() {
       localStorage.removeItem('honey-user')  // 清除当前的token和用户数据

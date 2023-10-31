@@ -16,11 +16,11 @@ const routes = [
     component: () => import('../views/Manager.vue'),
     redirect: '/home',  // redirect to home page
     children: [
-      { path: '403', name: 'Auth', meta: { name: '无权限' }, component: () => import('../views/manager/Auth') },
-      { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/manager/Home') },
-      { path: 'user', name: 'User', meta: { name: '用户信息' }, component: () => import('../views/manager/User') },
-      { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/manager/Person') },
-      { path: 'password', name: 'Password', meta: { name: '修改密码' }, component: () => import('../views/manager/Password') },
+      { path: '403', name: 'Auth', meta: { name: 'Unauth' }, component: () => import('../views/manager/Auth') },
+      { path: 'home', name: 'Home', meta: { name: 'Home Page' }, component: () => import('../views/manager/Home') },
+      { path: 'user', name: 'User', meta: { name: 'User Info' }, component: () => import('../views/manager/User') },
+      { path: 'person', name: 'Person', meta: { name: 'Personal Info' }, component: () => import('../views/manager/Person') },
+      { path: 'password', name: 'Password', meta: { name: 'Change Password' }, component: () => import('../views/manager/Password') },
       { path: 'news', name: 'News', meta: { name: '新闻信息' }, component: () => import('../views/manager/News') },
       { path: 'newsDetail', name: 'NewsDetail', meta: { name: '新闻详情' }, component: () => import('../views/manager/NewsDetail') },
       { path: 'notice', name: 'Notice', meta: { name: '系统公告' }, component: () => import('../views/manager/Notice') },
@@ -29,9 +29,9 @@ const routes = [
       { path: 'orders', name: 'Orders', meta: { name: '订单管理' }, component: () => import('../views/manager/Orders') },
     ]
   },
-  { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },
-  { path: '/register', name: 'Register', meta: { name: '注册' }, component: () => import('../views/Register.vue') },
-  { path: '*', name: '404', meta: { name: '无法访问' }, component: () => import('../views/404.vue') }, //other situations we not consider all 404
+  { path: '/login', name: 'Login', meta: { name: 'Login' }, component: () => import('../views/Login.vue') },
+  { path: '/register', name: 'Register', meta: { name: 'Register' }, component: () => import('../views/Register.vue') },
+  { path: '*', name: '404', meta: { name: '404 Not Found' }, component: () => import('../views/404.vue') }, //other situations we not consider all 404
 ]
 
 const router = new VueRouter({

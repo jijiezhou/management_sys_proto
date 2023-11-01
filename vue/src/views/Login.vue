@@ -60,23 +60,23 @@ export default {
   },
   data() {
 
-    // 验证码校验
+    // validation code check
     const validateCode = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入验证码'))
+        callback(new Error('please enter validation code'))
       } else if (value.toLowerCase() !== this.code) {
-        callback(new Error('验证码错误'))
+        callback(new Error('validation code wrong'))
       } else {
         callback()
       }
     }
 
     return {
-      forgetUserForm: {},   // 忘记密码的表单数据
+      forgetUserForm: {},   // Forgot password form data
       forgetPassDialogVis: false,
-      code: '',  // 验证码组件传递过来的code
+      code: '',  // The code passed by the verification code component
       user: {
-        code: '',   // 表单里用户输入的code 验证码
+        code: '',   // The code verification code entered by the user in the form
         username: '',
         password: ''
       },

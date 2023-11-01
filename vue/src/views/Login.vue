@@ -82,10 +82,10 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
+          { required: true, message: 'please enter username', trigger: 'blur' },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+          { required: true, message: 'please enter password', trigger: 'blur' },
         ],
         code: [
           { validator: validateCode, trigger: 'blur' }
@@ -97,14 +97,14 @@ export default {
 
   },
   methods: {
-    handleForgetPass() {   //  初始化表单的数据
+    handleForgetPass() {   //  initialize form data
       this.forgetUserForm = {}
       this.forgetPassDialogVis = true
     },
     resetPassword() {
       this.$request.put('/password', this.forgetUserForm).then(res => {
         if (res.code === '200') {
-          this.$message.success('重置成功')
+          this.$message.success('reset success')
           this.forgetPassDialogVis = false
         } else {
           this.$message.error(res.msg)
@@ -117,12 +117,12 @@ export default {
     login() {
       this.$refs['loginRef'].validate((valid) => {
         if (valid) {
-          // 验证通过
+          // validation pass
           this.$request.post('/login', this.user).then(res => {
             if (res.code === '200') {
               this.$router.push('/')
-              this.$message.success('登录成功')
-              localStorage.setItem("honey-user", JSON.stringify(res.data))  // 存储用户数据
+              this.$message.success('login success')
+              localStorage.setItem("honey-user", JSON.stringify(res.data))  // store user data
             } else {
               this.$message.error(res.msg)
             }

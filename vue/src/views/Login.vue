@@ -26,7 +26,7 @@
           </el-form-item>
           <div style="display: flex">
             <div style="flex: 1">还没有账号？请 <span style="color: #0f9876; cursor: pointer" @click="$router.push('/register')">注册</span></div>
-            <div style="flex: 1; text-align: right"><span style="color: #0f9876; cursor: pointer" @click="handleForgetPass">忘记密码</span></div>
+            <div style="flex: 1; text-align: right"><span style="color: #0f9876; cursor: pointer" @click="handleForgetPass">Forget Password</span></div>
           </div>
         </el-form>
       </div>
@@ -70,7 +70,7 @@ export default {
         callback()
       }
     }
-    //test alot
+
     return {
       forgetUserForm: {},   // 忘记密码的表单数据
       forgetPassDialogVis: false,

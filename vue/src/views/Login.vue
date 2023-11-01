@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <el-dialog title="忘记密码" :visible.sync="forgetPassDialogVis" width="30%">
+    <el-dialog title="Forget Password" :visible.sync="forgetPassDialogVis" width="30%">
       <el-form :model="forgetUserForm" label-width="80px" style="padding-right: 20px">
         <el-form-item label="Username">
           <el-input v-model="forgetUserForm.username" autocomplete="off" placeholder="please enter username"></el-input>
@@ -42,8 +42,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="forgetPassDialogVis = false">取 消</el-button>
-        <el-button type="primary" @click="resetPassword">确 定</el-button>
+        <el-button @click="forgetPassDialogVis = false">Cancel</el-button>
+        <el-button type="primary" @click="resetPassword">Confirm</el-button>
       </div>
     </el-dialog>
 

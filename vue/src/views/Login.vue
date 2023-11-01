@@ -25,7 +25,7 @@
             <el-button type="primary" style="width: 100%" @click="login">Log In</el-button>
           </el-form-item>
           <div style="display: flex">
-            <div style="flex: 1">Don't Have Account?<span style="color: #0f9876; cursor: pointer" @click="$router.push('/register')">Register</span></div>
+            <div style="flex: 1">No Account?<span style="color: #0f9876; cursor: pointer" @click="$router.push('/register')">Register</span></div>
             <div style="flex: 1; text-align: right"><span style="color: #0f9876; cursor: pointer" @click="handleForgetPass">Forget Password</span></div>
           </div>
         </el-form>

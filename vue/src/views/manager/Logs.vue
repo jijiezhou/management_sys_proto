@@ -56,7 +56,7 @@ export default {
   name: "Logs",
   data() {
     return {
-      tableData: [],  // 所有的数据
+      tableData: [],  // all data
       pageNum: 1,   // 当前的页码
       pageSize: 5,  // 每页显示的个数
       operation: '',

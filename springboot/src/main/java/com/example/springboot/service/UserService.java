@@ -10,7 +10,6 @@ import com.example.springboot.utils.TokenUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
@@ -18,17 +17,16 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Resource
     UserMapper userMapper;
 
-
     @Override
     public boolean save(User entity) {
         if (StrUtil.isBlank(entity.getName())) {
             entity.setName(entity.getUsername());
         }
         if (StrUtil.isBlank(entity.getPassword())) {
-            entity.setPassword("123");   // 默认密码123
+            entity.setPassword("123");   // default password: 123
         }
         if (StrUtil.isBlank(entity.getRole())) {
-            entity.setRole("用户");   // 默认角色：用户
+            entity.setRole("用户");   // default role: user
         }
         return super.save(entity);
     }
@@ -36,15 +34,15 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public User selectByUsername(String username) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);  //  eq => ==   where username = #{username}
-        // 根据用户名查询数据库的用户信息
+        // Query user information in the database based on username
         return getOne(queryWrapper); //  select * from user where username = #{username}
     }
 
-    // 验证用户账户是否合法
+    // Login user account if valid
     public User login(User user) {
         User dbUser = selectByUsername(user.getUsername());
         if (dbUser == null) {
-            // 抛出一个自定义的异常
+            //Throw a custom exception
             throw new ServiceException("Username or password incorrect");
         }
         if (!user.getPassword().equals(dbUser.getPassword())) {
@@ -59,8 +57,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public User register(User user) {
         User dbUser = selectByUsername(user.getUsername());
         if (dbUser != null) {
-            // 抛出一个自定义的异常
-            throw new ServiceException("用户名已存在");
+            // Throw a custom exception
+            throw new ServiceException("Username has already exist");
         }
         user.setName(user.getUsername());
         userMapper.insert(user);

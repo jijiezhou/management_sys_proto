@@ -79,27 +79,27 @@ export default {
       }
       this.$confirm('您确认批量删除这些数据吗？', '确认删除', {type: "warning"}).then(response => {
         this.$request.delete('/logs/delete/batch', {data: this.ids}).then(res => {
-          if (res.code === '200') {   // 表示操作成功
-            this.$message.success('操作成功')
+          if (res.code === '200') {   // operation success
+            this.$message.success('operation success')
             this.load(1)
           } else {
-            this.$message.error(res.msg)  // 弹出错误的信息
+            this.$message.error(res.msg)
           }
         })
       }).catch(() => {
       })
     },
-    handleSelectionChange(rows) {   // 当前选中的所有的行数据
+    handleSelectionChange(rows) {   // All row data currently selected
       this.ids = rows.map(v => v.id)
     },
     del(id) {
       this.$confirm('您确认删除吗？', '确认删除', {type: "warning"}).then(response => {
         this.$request.delete('/logs/delete/' + id).then(res => {
-          if (res.code === '200') {   // 表示操作成功
-            this.$message.success('操作成功')
+          if (res.code === '200') {   // operation success
+            this.$message.success('operation success')
             this.load(1)
           } else {
-            this.$message.error(res.msg)  // 弹出错误的信息
+            this.$message.error(res.msg)  // Error message pop
           }
         })
       }).catch(() => {

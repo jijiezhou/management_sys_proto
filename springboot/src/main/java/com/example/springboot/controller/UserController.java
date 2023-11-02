@@ -37,7 +37,7 @@ public class UserController {
     UserService userService;
 
     /**
-     * 新增用户信息
+     * add user info
      */
     @HoneyLogs(operation = "用户", type = LogType.ADD)
     @PostMapping("/add")
@@ -46,16 +46,16 @@ public class UserController {
             userService.save(user);
         } catch (Exception e) {
             if (e instanceof DuplicateKeyException) {
-                return Result.error("插入数据库错误");
+                return Result.error("Insert database incorrect");
             } else {
-                return Result.error("系统错误");
+                return Result.error("System Error");
             }
         }
         return Result.success();
     }
 
     /**
-     * 修改用户信息
+     * update user info
      */
     @HoneyLogs(operation = "用户", type = LogType.UPDATE)
     @PutMapping("/update")
@@ -65,14 +65,14 @@ public class UserController {
     }
 
     /**
-     * 删除用户信息
+     * delete user info
      */
     @HoneyLogs(operation = "用户", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         User currentUser = TokenUtils.getCurrentUser();
         if (id.equals(currentUser.getId())) {
-            throw new ServiceException("不能删除当前的用户");
+            throw new ServiceException("Cannot delete current user");
         }
         userService.removeById(id);
         return Result.success();
@@ -80,21 +80,21 @@ public class UserController {
 
 
     /**
-     * 批量删除用户信息
+     * delete user info by batch
      */
     @HoneyLogs(operation = "用户", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {  //  [7, 8]
         User currentUser = TokenUtils.getCurrentUser();
         if (currentUser != null && currentUser.getId() != null && ids.contains(currentUser.getId())) {
-            throw new ServiceException("不能删除当前的用户");
+            throw new ServiceException("Cannot delete current user");
         }
         userService.removeBatchByIds(ids);
         return Result.success();
     }
 
     /**
-     * 查询全部用户信息
+     * Query all user info
      */
     @GetMapping("/selectAll")
     public Result selectAll() {
@@ -103,7 +103,7 @@ public class UserController {
     }
 
     /**
-     * 根据ID查询用户信息
+     * Query user info by id
      */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
@@ -113,16 +113,16 @@ public class UserController {
 
 
     /**
-     * 多条件模糊查询用户信息
-     * pageNum 当前的页码
-     * pageSize 每页查询的个数
+     * Multi-condition fuzzy query of user information
+     * pageNum: current page
+     * pageSize: number of items in one page
      */
     @GetMapping("/selectByPage")
     public Result selectByPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
                                @RequestParam String username,
                                @RequestParam String name) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<User>().orderByDesc("id");  // 默认倒序，让最新的数据在最上面
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>().orderByDesc("id");  // let newest data on the top
         queryWrapper.like(StrUtil.isNotBlank(username), "username", username);
         queryWrapper.like(StrUtil.isNotBlank(name), "name", name);
         // select * from user where username like '%#{username}%' and name like '%#{name}%'

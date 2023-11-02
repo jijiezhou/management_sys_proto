@@ -57,8 +57,8 @@ export default {
   data() {
     return {
       tableData: [],  // all data
-      pageNum: 1,   // 当前的页码
-      pageSize: 5,  // 每页显示的个数
+      pageNum: 1,   // current page
+      pageSize: 5,  // number of items in one page
       operation: '',
       total: 0,
       form: {},
@@ -74,7 +74,7 @@ export default {
   methods: {
     delBatch() {
       if (!this.ids.length) {
-        this.$message.warning('请选择数据')
+        this.$message.warning('Please select data')
         return
       }
       this.$confirm('您确认批量删除这些数据吗？', '确认删除', {type: "warning"}).then(response => {

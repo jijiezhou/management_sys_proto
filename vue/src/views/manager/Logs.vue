@@ -111,7 +111,7 @@ export default {
       this.optUser = ''
       this.load()
     },
-    load(pageNum) {  // 分页查询
+    load(pageNum) {  // page query
       if (pageNum) this.pageNum = pageNum
       this.$request.get('/logs/selectByPage', {
         params: {

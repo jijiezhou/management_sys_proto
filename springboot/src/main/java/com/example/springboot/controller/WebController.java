@@ -71,14 +71,14 @@ public class WebController {
     }
 
     /**
-     * 重置密码
+     * Reset Password
      */
     @HoneyLogs(operation = "用户", type = LogType.UPDATE)
     @AuthAccess
     @PutMapping("/password")
     public Result password(@RequestBody User user) {
         if (StrUtil.isBlank(user.getUsername()) || StrUtil.isBlank(user.getPhone())) {
-            return Result.error("数据输入不合法");
+            return Result.error("Input data illegal");
         }
         userService.resetPassword(user);
         return Result.success();

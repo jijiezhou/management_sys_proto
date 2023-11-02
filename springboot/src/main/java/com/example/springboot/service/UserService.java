@@ -70,13 +70,13 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public void resetPassword(User user) {
         User dbUser = selectByUsername(user.getUsername());
         if (dbUser == null) {
-            // 抛出一个自定义的异常
-            throw new ServiceException("用户不存在");
+            // user is not exist
+            throw new ServiceException("User is not exist");
         }
         if (!user.getPhone().equals(dbUser.getPhone())) {
-            throw new ServiceException("验证错误");
+            throw new ServiceException("Validation incorrect");
         }
-        dbUser.setPassword("123");   // 重置密码
+        dbUser.setPassword("123");   // reset password
         updateById(dbUser);
     }
 }

@@ -26,7 +26,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             entity.setPassword("123");   // default password: 123
         }
         if (StrUtil.isBlank(entity.getRole())) {
-            entity.setRole("用户");   // default role: user
+            entity.setRole("user");   // default role: user
         }
         return super.save(entity);
     }

@@ -18,8 +18,8 @@
           </el-form-item>
           <el-form-item prop="role">
             <el-radio-group v-model="user.role">
-              <el-radio label="User"></el-radio>
-              <el-radio label="Merchant"></el-radio>
+              <el-radio label="user"></el-radio>
+              <el-radio label="merchant"></el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>

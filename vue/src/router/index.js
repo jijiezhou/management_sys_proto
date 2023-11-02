@@ -50,7 +50,7 @@ router.beforeEach((to, from, next) => {
 
   //If the currently logged-in user is not an administrator, and the current arrival path is a path that only administrators
   // have permission to access, then at this time I will let the user go to a page without permission and prevent him from accessing the actual page.
-  if (user.role !== '管理员' && adminPaths.includes(to.path)) {
+  if (user.role !== 'admin' && adminPaths.includes(to.path)) {
     //if current user not admin and want to visit the pages only open to admin, then route guide to page 403
     next('/403')
   } else {

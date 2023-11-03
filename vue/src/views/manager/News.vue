@@ -1,22 +1,24 @@
 <template>
   <div>
     <div>
-      <el-input style="width: 200px" placeholder="查询标题" v-model="title"></el-input>
-      <el-button type="primary" style="margin-left: 10px" @click="load(1)">查询</el-button>
-      <el-button type="info" @click="reset">重置</el-button>
+      <el-input style="width: 200px" placeholder="query title" v-model="title"></el-input>
+      <el-button type="primary" style="margin-left: 10px" @click="load(1)">Query</el-button>
+      <el-button type="info" @click="reset">Reset</el-button>
     </div>
+
     <div style="margin: 10px 0">
-      <el-button type="primary" plain @click="handleAdd">新增</el-button>
-      <el-button type="danger" plain @click="delBatch">批量删除</el-button>
+      <el-button type="primary" plain @click="handleAdd">Insert</el-button>
+      <el-button type="danger" plain @click="delBatch">DeleteBatch</el-button>
     </div>
+
     <el-table :data="tableData" stripe :header-cell-style="{ backgroundColor: 'aliceblue', color: '#666' }" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column prop="id" label="序号" width="70" align="center"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="description" label="简介"></el-table-column>
-      <el-table-column prop="content" label="内容">
+      <el-table-column prop="id" label="id" width="70" align="center"></el-table-column>
+      <el-table-column prop="title" label="title"></el-table-column>
+      <el-table-column prop="description" label="description"></el-table-column>
+      <el-table-column prop="content" label="content">
         <template v-slot="scope">
-          <el-button @click="showContent(scope.row.content)" size="mini">显示内容</el-button>
+          <el-button @click="showContent(scope.row.content)" size="mini">Show Content</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="content" label="详情页">
@@ -24,12 +26,12 @@
           <el-button @click="$router.push('/newsDetail?id=' + scope.row.id)" size="mini">在详情页显示</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="author" label="发布人"></el-table-column>
-      <el-table-column prop="time" label="发布时间"></el-table-column>
-      <el-table-column label="操作" align="center" width="180">
+      <el-table-column prop="author" label="author"></el-table-column>
+      <el-table-column prop="time" label="time"></el-table-column>
+      <el-table-column label="operation" align="center" width="180">
         <template v-slot="scope">
-          <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" plain @click="del(scope.row.id)">删除</el-button>
+          <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)">Edit</el-button>
+          <el-button size="mini" type="danger" plain @click="del(scope.row.id)">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -44,10 +46,10 @@
       </el-pagination>
     </div>
 
-    <el-dialog title="新闻信息" :visible.sync="fromVisible" width="60%" @close="closeDialog" :close-on-click-modal="false">
+    <el-dialog title="News Information" :visible.sync="formVisible" width="60%" @close="closeDialog" :close-on-click-modal="false">
       <el-form :model="form" label-width="80px" style="padding-right: 20px" :rules="rules" ref="formRef">
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="标题"></el-input>
+        <el-form-item label="title" prop="title">
+          <el-input v-model="form.title" placeholder="title"></el-input>
         </el-form-item>
         <el-form-item label="简介" prop="content">
           <el-input v-model="form.description" placeholder="简介"></el-input>
@@ -58,17 +60,17 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="fromVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="formVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="save">Confirm</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="内容" :visible.sync="fromVisible1" width="60%">
+    <el-dialog title="Content" :visible.sync="formVisible1" width="60%">
       <el-card class="w-e-text">
         <div v-html="content"></div>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="fromVisible1 = false">确 定</el-button>
+        <el-button type="primary" @click="formVisible1 = false">Confirm</el-button>
       </div>
     </el-dialog>
 
@@ -77,6 +79,7 @@
 </template>
 
 <script>
+
 import E from "wangeditor"
 import hljs from 'highlight.js'
 
@@ -90,7 +93,7 @@ export default {
       username: '',
       title: '',
       total: 0,
-      fromVisible: false,
+      formVisible: false,
       form: {},
       user: JSON.parse(localStorage.getItem('honey-user') || '{}'),
       rules: {
@@ -101,7 +104,7 @@ export default {
       ids: [],
       editor: null,
       content: '',
-      fromVisible1: false,
+      formVisible1: false,
     }
   },
   created() {
@@ -110,7 +113,7 @@ export default {
   methods: {
     showContent(content) {
       this.content = content
-      this.fromVisible1 = true
+      this.formVisible1 = true
     },
     closeDialog() {
       // 销毁编辑器
@@ -133,7 +136,8 @@ export default {
         })
       }).catch(() => {})
     },
-    handleSelectionChange(rows) {   // 当前选中的所有的行数据
+    //All row data currently selected, and generate corresponding array of ids
+    handleSelectionChange(rows) {
       this.ids = rows.map(v => v.id)
     },
     del(id) {
@@ -151,6 +155,8 @@ export default {
     setRichText() {
       this.$nextTick(() => {
         this.editor = new E(`#editor`)
+        this.editor.i18next = window.i18next
+        this.editor.config.lang = 'en'
         this.editor.highlight = hljs
         this.editor.config.uploadImgServer = this.$baseUrl + '/file/editor/upload'
         this.editor.config.uploadFileName = 'file'
@@ -168,20 +174,21 @@ export default {
         this.editor.config.uploadVideoParams = {
           type: 'video',
         }
-        this.editor.create()  // 创建
+        this.editor.create()  // create editor
       })
     },
     handleEdit(row) {   // 编辑数据
       this.form = JSON.parse(JSON.stringify(row))  // 给form对象赋值  注意要深拷贝数据
-      this.fromVisible = true   // 打开弹窗
+      this.formVisible = true   // 打开弹窗
       this.setRichText()
       setTimeout(() => {
         this.editor.txt.html(row.content)  // 设置富文本内容
       }, 0)
     },
-    handleAdd() {   // 新增数据
-      this.form = {}  // 新增数据的时候清空数据
-      this.fromVisible = true   // 打开弹窗
+    //Add data
+    handleAdd() {
+      this.form = {}  // make sure the initial data is blank
+      this.formVisible = true   // open dialog
 
       this.setRichText()
     },
@@ -199,7 +206,7 @@ export default {
             if (res.code === '200') {  // 表示成功保存
               this.$message.success('保存成功')
               this.load(1)
-              this.fromVisible = false
+              this.formVisible = false
             } else {
               this.$message.error(res.msg)  // 弹出错误的信息
             }
@@ -211,7 +218,7 @@ export default {
       this.title = ''
       this.load()
     },
-    load(pageNum) {  // 分页查询
+    load(pageNum) {  // pagination
       if (pageNum)  this.pageNum = pageNum
       this.$request.get('/news/selectByPage', {
         params: {

@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 
 @Service
 public class NewsService extends ServiceImpl<NewsMapper, News> {
-
     @Resource
     NewsMapper newsMapper;
-
 }

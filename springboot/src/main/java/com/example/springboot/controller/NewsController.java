@@ -15,7 +15,6 @@ import com.example.springboot.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,12 +28,12 @@ public class NewsController {
     UserService userService;
 
     /**
-     * 新增信息
+     * Add News
      */
     @HoneyLogs(operation = "新闻", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody News news) {
-        User currentUser = TokenUtils.getCurrentUser();  // 获取到当前登录的用户信息
+        User currentUser = TokenUtils.getCurrentUser();  // Get the currently logged in user information
         news.setAuthorid(currentUser.getId());
         news.setTime(DateUtil.now());  //   2023-09-12 21:09:12
         newsService.save(news);
@@ -42,7 +41,7 @@ public class NewsController {
     }
 
     /**
-     * 修改信息
+     * Edit News
      */
     @HoneyLogs(operation = "新闻", type = LogType.UPDATE)
     @PutMapping("/update")
@@ -52,7 +51,7 @@ public class NewsController {
     }
 
     /**
-     * 删除信息
+     * Delete News
      */
     @HoneyLogs(operation = "新闻", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
@@ -63,7 +62,7 @@ public class NewsController {
 
 
     /**
-     * 批量删除信息
+     * Delete News Batch
      */
     @HoneyLogs(operation = "新闻", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
@@ -73,7 +72,7 @@ public class NewsController {
     }
 
     /**
-     * 查询全部信息
+     * Query all info
      */
     @GetMapping("/selectAll")
     public Result selectAll() {
@@ -82,7 +81,7 @@ public class NewsController {
     }
 
     /**
-     * 根据ID查询信息
+     * Select by Id
      */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
@@ -96,9 +95,9 @@ public class NewsController {
 
 
     /**
-     * 多条件模糊查询信息
-     * pageNum 当前的页码
-     * pageSize 每页查询的个数
+     * Muti-condition query
+     * pageNum current page
+     * pageSize number of items in one page
      */
     @GetMapping("/selectByPage")
     public Result selectByPage(@RequestParam Integer pageNum,

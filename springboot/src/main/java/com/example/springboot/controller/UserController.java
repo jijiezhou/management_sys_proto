@@ -166,20 +166,20 @@ public class UserController {
     }
 
     /**
-     * 批量导入
-     * @param file 传入的excel文件对象
-     * @return 导入结果
+     * Import data by batch
+     * @param file passed in excel file object
+     * @return import result
      */
     @PostMapping("/import")
     public Result importData(MultipartFile file) throws IOException {
         ExcelReader reader = ExcelUtil.getReader(file.getInputStream());
         List<User> userList = reader.readAll(User.class);
-        // 写入数据到数据库
+        // Write data to database
         try {
             userService.saveBatch(userList);
         } catch (Exception e) {
             e.printStackTrace();
-            return Result.error("数据批量导入错误");
+            return Result.error("Data batch import error");
         }
         return Result.success();
     }

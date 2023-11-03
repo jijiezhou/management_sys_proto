@@ -10,12 +10,10 @@
     <div style="margin: 10px 0">
       <el-button type="primary" plain @click="handleAdd">Add</el-button>
       <el-button type="danger" plain @click="delBatch">DelBatch</el-button>
-      <!--
-      <el-button type="info" plain @click="exportData">批量导出</el-button>
+      <el-button type="info" plain @click="exportData">ExportData</el-button>
       <el-upload :action="$baseUrl + '/user/import'" :headers="{token: user.token}" :on-success="handleImport" style="display: inline-block; margin-left: 10px" :show-file-list="false">
-        <el-button type="primary" plain>批量导入</el-button>
+        <el-button type="primary" plain>ImportData</el-button>
       </el-upload>
-      !-->
     </div>
 
     <el-table :data="tableData" stripe :header-cell-style="{ backgroundColor: 'aliceblue', color: '#666' }"
@@ -135,11 +133,13 @@ export default {
         this.$message.error(res.msg)
       }
     },
-    exportData() {   // 批量导出数据
-      if (!this.ids.length) {   // 没有选择行的时候，全部导出  或者根据我的搜索条件导出
+    exportData() {   // export data in batch
+      //When no rows are selected, export all or export based on my search conditions.
+      if (!this.ids.length) {
         window.open(this.$baseUrl + '/user/export?token=' + this.user.token + "&username="
             + this.username + "&name=" + this.name)
       } else {      // [1,2,3] => '1,2,3'
+        //Convert array to String
         let idStr = this.ids.join(',')
         window.open(this.$baseUrl + '/user/export?token=' + this.user.token + '&ids=' + idStr)
       }

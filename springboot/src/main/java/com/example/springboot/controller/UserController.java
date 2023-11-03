@@ -131,7 +131,8 @@ public class UserController {
     }
 
     /**
-     * 批量导出数据
+     * Export data in batches
+     * Core: querying then use output stream to write
      */
     @GetMapping("/export")
     public void exportData(@RequestParam(required = false) String username,
@@ -142,21 +143,23 @@ public class UserController {
 
         List<User> list;
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        //Condition 2: query based on select
         if (StrUtil.isNotBlank(ids)) {     // ["1", "2", "3"]   => [1,2,3]
+            //Convert array of String to array of Integer
             List<Integer> idsArr1 = Arrays.stream(ids.split(",")).map(Integer::valueOf).collect(Collectors.toList());
             queryWrapper.in("id", idsArr1);
         } else {
-            // 第一种全部导出或者条件导出
+            // Condition 1:Export all or export conditionally
             queryWrapper.like(StrUtil.isNotBlank(username), "username", username);
             queryWrapper.like(StrUtil.isNotBlank(name), "name", name);
         }
-        list = userService.list(queryWrapper);   // 查询出当前User表的所有数据
+        list = userService.list(queryWrapper);   // Query all data of the current User table
         writer.write(list, true);
 
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("用户信息表", "UTF-8") + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("user_info_table", "UTF-8") + ".xlsx");
         ServletOutputStream outputStream = response.getOutputStream();
-        writer.flush(outputStream, true);
+        writer.flush(outputStream, true); //close stream
         writer.close();
         outputStream.flush();
         outputStream.close();

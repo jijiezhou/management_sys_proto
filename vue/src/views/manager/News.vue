@@ -21,9 +21,9 @@
           <el-button @click="showContent(scope.row.content)" size="mini">Show Content</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="content" label="详情页">
+      <el-table-column prop="content" label="detail">
         <template v-slot="scope">
-          <el-button @click="$router.push('/newsDetail?id=' + scope.row.id)" size="mini">在详情页显示</el-button>
+          <el-button @click="$router.push('/newsDetail?id=' + scope.row.id)" size="mini">NewsDetail</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="author" label="author"></el-table-column>
@@ -177,12 +177,13 @@ export default {
         this.editor.create()  // create editor
       })
     },
-    handleEdit(row) {   // 编辑数据
-      this.form = JSON.parse(JSON.stringify(row))  // 给form对象赋值  注意要深拷贝数据
-      this.formVisible = true   // 打开弹窗
+    //Edit data
+    handleEdit(row) {
+      this.form = JSON.parse(JSON.stringify(row))  // deep copy, set initial data into form
+      this.formVisible = true   // open dialog
       this.setRichText()
       setTimeout(() => {
-        this.editor.txt.html(row.content)  // 设置富文本内容
+        this.editor.txt.html(row.content)  // need to use setTimeout here
       }, 0)
     },
     //Add data
@@ -192,10 +193,11 @@ export default {
 
       this.setRichText()
     },
-    save() {   // 保存按钮触发的逻辑  它会触发新增或者更新
+    //The logic triggered by the save button will trigger new or updated
+    save() {
       this.$refs.formRef.validate((valid) => {
         if (valid) {
-          // 获取编辑框的内容
+          //Get the contents of the edit box
           let content = this.editor.txt.html()
           this.form.content = content
           this.$request({
@@ -203,12 +205,12 @@ export default {
             method: this.form.id ? 'PUT' : 'POST',
             data: this.form
           }).then(res => {
-            if (res.code === '200') {  // 表示成功保存
-              this.$message.success('保存成功')
+            if (res.code === '200') {  // save success
+              this.$message.success('save success')
               this.load(1)
               this.formVisible = false
             } else {
-              this.$message.error(res.msg)  // 弹出错误的信息
+              this.$message.error(res.msg)  // log error info
             }
           })
         }

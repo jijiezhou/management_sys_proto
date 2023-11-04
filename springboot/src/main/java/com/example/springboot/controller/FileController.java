@@ -74,22 +74,23 @@ public class FileController {
     @HoneyLogs(operation = "文件", type = LogType.ADD)
     @PostMapping("/editor/upload")
     public Dict editorUpload(@RequestParam MultipartFile file, @RequestParam String type) throws IOException {
-        String originalFilename = file.getOriginalFilename();  // 文件的原始名称
+        String originalFilename = file.getOriginalFilename();  // original name of file
         // aaa.png
         String mainName = FileUtil.mainName(originalFilename);  // aaa
         String extName = FileUtil.extName(originalFilename);// png
         if (!FileUtil.exist(ROOT_PATH)) {
-            FileUtil.mkdir(ROOT_PATH);  // 如果当前文件的父级目录不存在，就创建
+            FileUtil.mkdir(ROOT_PATH);  // If the parent directory of the current file does not exist, create it
         }
-        if (FileUtil.exist(ROOT_PATH + File.separator + originalFilename)) {  // 如果当前上传的文件已经存在了，那么这个时候我就要重名一个文件名称
+        //If the currently uploaded file already exists, then I will rename the file at this time using time created
+        if (FileUtil.exist(ROOT_PATH + File.separator + originalFilename)) {
             originalFilename = System.currentTimeMillis() + "_" + mainName + "." + extName;
         }
         File saveFile = new File(ROOT_PATH + File.separator + originalFilename);
-        file.transferTo(saveFile);  // 存储文件到本地的磁盘里面去
+        file.transferTo(saveFile);  // Store files to local disk
         String url = "http://" + ip + ":" + port + "/file/download/" + originalFilename;
-        if ("img".equals(type)) {  // 上传图片
+        if ("img".equals(type)) {  // upload image
             return Dict.create().set("errno", 0).set("data", CollUtil.newArrayList(Dict.create().set("url", url)));
-        } else if ("video".equals(type)) {
+        } else if ("video".equals(type)) { //upload video
             return Dict.create().set("errno", 0).set("data", Dict.create().set("url", url));
         }
         return Dict.create().set("errno", 0);

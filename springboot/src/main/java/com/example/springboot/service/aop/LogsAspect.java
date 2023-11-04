@@ -36,10 +36,11 @@ public class LogsAspect {
      */
     @AfterReturning(pointcut = "@annotation(honeyLogs)", returning = "jsonResult")
     public void recordLog(JoinPoint joinPoint, HoneyLogs honeyLogs, Object jsonResult) {
-        // get current login user info
+        // already login: get current login user info
         User loginUser = TokenUtils.getCurrentUser();
-        if (loginUser == null) { // 用户未登录的情况下  loginUser是null  是null的话我们就要从参数里面获取操作人信息
-            // 登录、注册
+        // not login -> loginUser is null, we need get user from params
+        if (loginUser == null) {
+            // login/ register
             Object[] args = joinPoint.getArgs();
             if (ArrayUtil.isNotEmpty(args)) {
                 if (args[0] instanceof User) {
@@ -47,16 +48,17 @@ public class LogsAspect {
                 }
             }
         }
+        //if both above cannot get user
         if (loginUser == null) {
-            log.error("记录日志信息报错，未获取到当前操作用户信息");
+            log.error("The current operating user information is not obtained. Log Error!");
             return;
         }
-        // 获取HttpServletRequest对象
+        // Get HttpServletRequest Object
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
-        // 获取IP信息
+        // get IP info
         String ipAddr = IpUtils.getIpAddr(request);
-        //组装日志的实体对象
+        // Assembling Logs entity
         Logs logs = Logs.builder()
                 .user(loginUser.getUsername())
                 .operation(honeyLogs.operation())
@@ -65,7 +67,7 @@ public class LogsAspect {
                 .time(DateUtil.now())
                 .build();
 
-        // 插入数据到数据库
+        // Insert to database
         ThreadUtil.execAsync(() -> {
             logsService.save(logs);
         });

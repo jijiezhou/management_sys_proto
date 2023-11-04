@@ -22,9 +22,9 @@
             <el-menu-item index="/user" v-if="user.role === 'admin'">User Info</el-menu-item>
             <el-menu-item index="/news">News Info</el-menu-item>
             <el-menu-item index="/notice" v-if="user.role === 'admin'">System Notice</el-menu-item>
-            <el-menu-item index="/logs" v-if="user.role === 'admin'">System Log</el-menu-item>
-            <el-menu-item index="/charts" v-if="user.role === 'admin'">数据统计</el-menu-item>
-            <el-menu-item index="/orders">订单管理</el-menu-item>
+            <el-menu-item index="/logs" v-if="user.role === 'admin'">System Logs</el-menu-item>
+            <el-menu-item index="/charts" v-if="user.role === 'admin'">Charts</el-menu-item>
+            <el-menu-item index="/orders">Orders</el-menu-item>
           </el-submenu>
         </el-menu>
 
@@ -77,14 +77,15 @@ export default {
   name: 'HomeView',
   data() {
     return {
-      isCollapse: false,  // 不收缩
+      isCollapse: false,  // not collapse
       asideWidth: '200px',
       collapseIcon: 'el-icon-s-fold',
       user: JSON.parse(localStorage.getItem('honey-user') || '{}'),
     }
   },
-  mounted() {   // 页面加载完成之后触发
-    if (!this.user.id) {   // 当前的浏览器没有用户信息
+  //trigger after page loaded
+  mounted() {
+    if (!this.user.id) {   // if current browser don't have user info
       this.$router.push('/login')
     }
   },
@@ -95,7 +96,7 @@ export default {
       this.user = JSON.parse(JSON.stringify(user))
     },
     logout() {
-      localStorage.removeItem('honey-user')  // 清除当前的token和用户数据
+      localStorage.removeItem('honey-user')  //Clear current token and user data
       this.$router.push('/login')
     },
     handleFull() {

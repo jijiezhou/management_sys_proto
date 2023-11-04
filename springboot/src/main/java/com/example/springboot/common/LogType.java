@@ -5,7 +5,7 @@ package com.example.springboot.common;
  */
 public enum LogType {
 
-    ADD("add"),UPDATE("update"),DELETE("delete"), BATCH_DELETE("batch_delete"),LOGIN("login"),REGISTER("register");
+    ADD("add"),UPDATE("edit"),DELETE("delete"), BATCH_DELETE("delbatch"),LOGIN("login"),REGISTER("register");
 
     private String value;
 

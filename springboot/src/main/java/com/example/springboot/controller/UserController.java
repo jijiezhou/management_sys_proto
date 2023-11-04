@@ -39,7 +39,7 @@ public class UserController {
     /**
      * add user info
      */
-    @HoneyLogs(operation = "用户", type = LogType.ADD)
+    @HoneyLogs(operation = "user", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody User user) {
         try {
@@ -57,7 +57,7 @@ public class UserController {
     /**
      * update user info
      */
-    @HoneyLogs(operation = "用户", type = LogType.UPDATE)
+    @HoneyLogs(operation = "user", type = LogType.UPDATE)
     @PutMapping("/update")
     public Result update(@RequestBody User user) {
         userService.updateById(user);
@@ -67,7 +67,7 @@ public class UserController {
     /**
      * delete user info
      */
-    @HoneyLogs(operation = "用户", type = LogType.DELETE)
+    @HoneyLogs(operation = "user", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         User currentUser = TokenUtils.getCurrentUser();
@@ -82,7 +82,7 @@ public class UserController {
     /**
      * delete user info by batch
      */
-    @HoneyLogs(operation = "用户", type = LogType.BATCH_DELETE)
+    @HoneyLogs(operation = "user", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {  //  [7, 8]
         User currentUser = TokenUtils.getCurrentUser();

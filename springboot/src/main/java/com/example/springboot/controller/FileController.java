@@ -4,9 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Dict;
 import com.example.springboot.common.AuthAccess;
-import com.example.springboot.common.HoneyLogs;
 import com.example.springboot.common.LogType;
 import com.example.springboot.common.Result;
+import com.example.springboot.common.SysLogs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +29,7 @@ public class FileController {
 
     private static final String ROOT_PATH =  System.getProperty("user.dir") + File.separator + "files";  // ~\project\honey2024-master\files
 
-    @HoneyLogs(operation = "文件", type = LogType.ADD)
+    @SysLogs(operation = "file", type = LogType.ADD)
     @PostMapping("/upload")
     public Result upload(MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();  // original name of file
@@ -71,7 +71,7 @@ public class FileController {
         outputStream.close();
     }
 
-    @HoneyLogs(operation = "文件", type = LogType.ADD)
+    @SysLogs(operation = "file", type = LogType.ADD)
     @PostMapping("/editor/upload")
     public Dict editorUpload(@RequestParam MultipartFile file, @RequestParam String type) throws IOException {
         String originalFilename = file.getOriginalFilename();  // original name of file

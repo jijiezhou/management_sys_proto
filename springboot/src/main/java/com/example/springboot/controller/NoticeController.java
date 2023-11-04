@@ -4,9 +4,9 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.springboot.common.HoneyLogs;
 import com.example.springboot.common.LogType;
 import com.example.springboot.common.Result;
+import com.example.springboot.common.SysLogs;
 import com.example.springboot.entity.Notice;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.NoticeService;
@@ -30,7 +30,7 @@ public class NoticeController {
     /**
      * Add Notice
      */
-    @HoneyLogs(operation = "公告", type = LogType.ADD)
+    @SysLogs(operation = "notice", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody Notice notice) {
         //Get the currently logged in user information
@@ -44,7 +44,7 @@ public class NoticeController {
     /**
      * Edit Notice
      */
-    @HoneyLogs(operation = "公告", type = LogType.UPDATE)
+    @SysLogs(operation = "notice", type = LogType.UPDATE)
     @PutMapping("/update")
     public Result update(@RequestBody Notice notice) {
         noticeService.updateById(notice);
@@ -54,7 +54,7 @@ public class NoticeController {
     /**
      * Delete Notice
      */
-    @HoneyLogs(operation = "公告", type = LogType.DELETE)
+    @SysLogs(operation = "notice", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         noticeService.removeById(id);
@@ -65,7 +65,7 @@ public class NoticeController {
     /**
      * Delete Notice By Batch
      */
-    @HoneyLogs(operation = "公告", type = LogType.BATCH_DELETE)
+    @SysLogs(operation = "notice", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {
         noticeService.removeBatchByIds(ids);
@@ -117,7 +117,7 @@ public class NoticeController {
     public Result selectByPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
                                @RequestParam String title) {
-        QueryWrapper<Notice> queryWrapper = new QueryWrapper<Notice>().orderByDesc("id");  // 默认倒序，让最新的数据在最上面
+        QueryWrapper<Notice> queryWrapper = new QueryWrapper<Notice>().orderByDesc("id");  // default: newest on the top
         queryWrapper.like(StrUtil.isNotBlank(title), "title", title);
         Page<Notice> page = noticeService.page(new Page<>(pageNum, pageSize), queryWrapper);
         List<Notice> records = page.getRecords();

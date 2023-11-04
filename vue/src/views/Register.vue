@@ -14,7 +14,7 @@
             <el-input prefix-icon="el-icon-lock" size="medium" show-password placeholder="please input password" v-model="user.password"></el-input>
           </el-form-item>
           <el-form-item prop="confirmPass">
-            <el-input prefix-icon="el-icon-lock" size="medium" show-password placeholder="please validate username" v-model="user.confirmPass"></el-input>
+            <el-input prefix-icon="el-icon-lock" size="medium" show-password placeholder="please validate password" v-model="user.confirmPass"></el-input>
           </el-form-item>
           <el-form-item prop="role">
             <el-radio-group v-model="user.role">
@@ -40,12 +40,12 @@
 export default {
   name: "Register",
   data() {
-    // 验证码校验
+    // Verification code velidate
     const validatePassword = (rule, confirmPass, callback) => {
       if (confirmPass === '') {
-        callback(new Error('请确认密码'))
+        callback(new Error('Please input password'))
       } else if (confirmPass !== this.user.password) {
-        callback(new Error('两次输入的密码不一致'))
+        callback(new Error('password inconsistent'))
       } else {
         callback()
       }

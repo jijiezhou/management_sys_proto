@@ -4,9 +4,9 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.springboot.common.HoneyLogs;
 import com.example.springboot.common.LogType;
 import com.example.springboot.common.Result;
+import com.example.springboot.common.SysLogs;
 import com.example.springboot.entity.News;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.NewsService;
@@ -30,7 +30,7 @@ public class NewsController {
     /**
      * Add News
      */
-    @HoneyLogs(operation = "新闻", type = LogType.ADD)
+    @SysLogs(operation = "news", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody News news) {
         User currentUser = TokenUtils.getCurrentUser();  // Get the currently logged in user information
@@ -43,7 +43,7 @@ public class NewsController {
     /**
      * Edit News
      */
-    @HoneyLogs(operation = "新闻", type = LogType.UPDATE)
+    @SysLogs(operation = "news", type = LogType.UPDATE)
     @PutMapping("/update")
     public Result update(@RequestBody News news) {
         newsService.updateById(news);
@@ -53,7 +53,7 @@ public class NewsController {
     /**
      * Delete News
      */
-    @HoneyLogs(operation = "新闻", type = LogType.DELETE)
+    @SysLogs(operation = "news", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         newsService.removeById(id);
@@ -63,7 +63,7 @@ public class NewsController {
     /**
      * Delete News Batch
      */
-    @HoneyLogs(operation = "新闻", type = LogType.BATCH_DELETE)
+    @SysLogs(operation = "news", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {
         newsService.removeBatchByIds(ids);

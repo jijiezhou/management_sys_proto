@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * func：提供接口返回数据
+ * func：provide interface, return data
  * author：jijiez
  * date：2023/10/29
  */
@@ -41,7 +41,7 @@ public class WebController {
         return Result.success("success");
     }
 
-    @HoneyLogs(operation = "用户", type = LogType.LOGIN)
+    @HoneyLogs(operation = "user", type = LogType.LOGIN)
     @PostMapping("/login")
     public Result login(@RequestBody User user) {
         if (StrUtil.isBlank(user.getUsername()) || StrUtil.isBlank(user.getPassword())) {
@@ -56,7 +56,7 @@ public class WebController {
      * @param user
      * @return
      */
-    @HoneyLogs(operation = "用户", type = LogType.REGISTER)
+    @HoneyLogs(operation = "user", type = LogType.REGISTER)
     @AuthAccess
     @PostMapping("/register")
     public Result register(@RequestBody User user) {
@@ -73,7 +73,7 @@ public class WebController {
     /**
      * Reset Password
      */
-    @HoneyLogs(operation = "用户", type = LogType.UPDATE)
+    @HoneyLogs(operation = "user", type = LogType.UPDATE)
     @AuthAccess
     @PutMapping("/password")
     public Result password(@RequestBody User user) {

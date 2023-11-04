@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// 解决导航栏或者底部导航tabBar中的vue-router在3.0版本以上频繁点击菜单报错的问题。
+//Solve the problem of vue-router in the navigation bar or bottom navigation tabBar reporting errors when frequently clicking the menu in version 3.0 or above.
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
@@ -24,9 +24,9 @@ const routes = [
       { path: 'news', name: 'News', meta: { name: 'News Info' }, component: () => import('../views/manager/News') },
       { path: 'newsDetail', name: 'NewsDetail', meta: { name: 'News Detail' }, component: () => import('../views/manager/NewsDetail') },
       { path: 'notice', name: 'Notice', meta: { name: 'System Notice' }, component: () => import('../views/manager/Notice') },
-      { path: 'logs', name: 'Logs', meta: { name: 'System Log' }, component: () => import('../views/manager/Logs') },
-      { path: 'charts', name: 'Charts', meta: { name: '数据统计' }, component: () => import('../views/manager/Charts') },
-      { path: 'orders', name: 'Orders', meta: { name: '订单管理' }, component: () => import('../views/manager/Orders') },
+      { path: 'logs', name: 'Logs', meta: { name: 'System Logs' }, component: () => import('../views/manager/Logs') },
+      { path: 'charts', name: 'Charts', meta: { name: 'Charts' }, component: () => import('../views/manager/Charts') },
+      { path: 'orders', name: 'Orders', meta: { name: 'Orders' }, component: () => import('../views/manager/Orders') },
     ]
   },
   { path: '/login', name: 'Login', meta: { name: 'Login' }, component: () => import('../views/Login.vue') },

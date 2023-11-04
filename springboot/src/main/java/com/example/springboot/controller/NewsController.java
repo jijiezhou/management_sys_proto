@@ -60,7 +60,6 @@ public class NewsController {
         return Result.success();
     }
 
-
     /**
      * Delete News Batch
      */
@@ -103,7 +102,7 @@ public class NewsController {
     public Result selectByPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
                                @RequestParam String title) {
-        QueryWrapper<News> queryWrapper = new QueryWrapper<News>().orderByDesc("id");  // 默认倒序，让最新的数据在最上面
+        QueryWrapper<News> queryWrapper = new QueryWrapper<News>().orderByDesc("id");  // default: newest on the top
         queryWrapper.like(StrUtil.isNotBlank(title), "title", title);
         Page<News> page = newsService.page(new Page<>(pageNum, pageSize), queryWrapper);
         List<News> records = page.getRecords();

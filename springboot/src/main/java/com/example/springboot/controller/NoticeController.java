@@ -28,12 +28,13 @@ public class NoticeController {
     UserService userService;
 
     /**
-     * 新增信息
+     * Add Notice
      */
     @HoneyLogs(operation = "公告", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody Notice notice) {
-        User currentUser = TokenUtils.getCurrentUser();  // 获取到当前登录的用户信息
+        //Get the currently logged in user information
+        User currentUser = TokenUtils.getCurrentUser();
         notice.setUserid(currentUser.getId());
         notice.setTime(DateUtil.now());  //   2023-09-12 21:09:12
         noticeService.save(notice);
@@ -41,7 +42,7 @@ public class NoticeController {
     }
 
     /**
-     * 修改信息
+     * Edit Notice
      */
     @HoneyLogs(operation = "公告", type = LogType.UPDATE)
     @PutMapping("/update")
@@ -51,7 +52,7 @@ public class NoticeController {
     }
 
     /**
-     * 删除信息
+     * Delete Notice
      */
     @HoneyLogs(operation = "公告", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
@@ -62,7 +63,7 @@ public class NoticeController {
 
 
     /**
-     * 批量删除信息
+     * Delete Notice By Batch
      */
     @HoneyLogs(operation = "公告", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
@@ -72,7 +73,7 @@ public class NoticeController {
     }
 
     /**
-     * 查询全部信息
+     * Select All
      */
     @GetMapping("/selectAll")
     public Result selectAll() {

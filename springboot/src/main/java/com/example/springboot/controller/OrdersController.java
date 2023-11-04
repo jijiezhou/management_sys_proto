@@ -5,9 +5,9 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.springboot.common.HoneyLogs;
 import com.example.springboot.common.LogType;
 import com.example.springboot.common.Result;
+import com.example.springboot.common.SysLogs;
 import com.example.springboot.entity.Orders;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.OrdersService;
@@ -31,7 +31,7 @@ public class OrdersController {
     /**
      * 新增信息
      */
-    @HoneyLogs(operation = "订单", type = LogType.ADD)
+    @SysLogs(operation = "订单", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody Orders orders) {
         User currentUser = TokenUtils.getCurrentUser();  // 获取到当前登录的用户信息
@@ -45,7 +45,7 @@ public class OrdersController {
     /**
      * 修改信息
      */
-    @HoneyLogs(operation = "订单", type = LogType.UPDATE)
+    @SysLogs(operation = "订单", type = LogType.UPDATE)
     @PutMapping("/update")
     public Result update(@RequestBody Orders orders) {
         ordersService.updateById(orders);
@@ -55,7 +55,7 @@ public class OrdersController {
     /**
      * 删除信息
      */
-    @HoneyLogs(operation = "订单", type = LogType.DELETE)
+    @SysLogs(operation = "订单", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         ordersService.removeById(id);
@@ -66,7 +66,7 @@ public class OrdersController {
     /**
      * 批量删除信息
      */
-    @HoneyLogs(operation = "订单", type = LogType.BATCH_DELETE)
+    @SysLogs(operation = "订单", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {
         ordersService.removeBatchByIds(ids);

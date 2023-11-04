@@ -4,9 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.StrUtil;
 import com.example.springboot.common.AuthAccess;
-import com.example.springboot.common.HoneyLogs;
 import com.example.springboot.common.LogType;
 import com.example.springboot.common.Result;
+import com.example.springboot.common.SysLogs;
 import com.example.springboot.entity.Orders;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.OrdersService;
@@ -41,7 +41,7 @@ public class WebController {
         return Result.success("success");
     }
 
-    @HoneyLogs(operation = "user", type = LogType.LOGIN)
+    @SysLogs(operation = "user", type = LogType.LOGIN)
     @PostMapping("/login")
     public Result login(@RequestBody User user) {
         if (StrUtil.isBlank(user.getUsername()) || StrUtil.isBlank(user.getPassword())) {
@@ -56,7 +56,7 @@ public class WebController {
      * @param user
      * @return
      */
-    @HoneyLogs(operation = "user", type = LogType.REGISTER)
+    @SysLogs(operation = "user", type = LogType.REGISTER)
     @AuthAccess
     @PostMapping("/register")
     public Result register(@RequestBody User user) {
@@ -73,7 +73,7 @@ public class WebController {
     /**
      * Reset Password
      */
-    @HoneyLogs(operation = "user", type = LogType.UPDATE)
+    @SysLogs(operation = "user", type = LogType.UPDATE)
     @AuthAccess
     @PutMapping("/password")
     public Result password(@RequestBody User user) {

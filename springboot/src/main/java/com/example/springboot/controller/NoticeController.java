@@ -109,9 +109,9 @@ public class NoticeController {
 
 
     /**
-     * 多条件模糊查询信息
-     * pageNum 当前的页码
-     * pageSize 每页查询的个数
+     * multi-condition query
+     * pageNum current page
+     * pageSize number of items per page
      */
     @GetMapping("/selectByPage")
     public Result selectByPage(@RequestParam Integer pageNum,

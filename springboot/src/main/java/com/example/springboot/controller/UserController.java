@@ -7,9 +7,9 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.springboot.common.HoneyLogs;
 import com.example.springboot.common.LogType;
 import com.example.springboot.common.Result;
+import com.example.springboot.common.SysLogs;
 import com.example.springboot.entity.User;
 import com.example.springboot.exception.ServiceException;
 import com.example.springboot.service.UserService;
@@ -39,7 +39,7 @@ public class UserController {
     /**
      * add user info
      */
-    @HoneyLogs(operation = "user", type = LogType.ADD)
+    @SysLogs(operation = "user", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody User user) {
         try {
@@ -57,7 +57,7 @@ public class UserController {
     /**
      * update user info
      */
-    @HoneyLogs(operation = "user", type = LogType.UPDATE)
+    @SysLogs(operation = "user", type = LogType.UPDATE)
     @PutMapping("/update")
     public Result update(@RequestBody User user) {
         userService.updateById(user);
@@ -67,7 +67,7 @@ public class UserController {
     /**
      * delete user info
      */
-    @HoneyLogs(operation = "user", type = LogType.DELETE)
+    @SysLogs(operation = "user", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         User currentUser = TokenUtils.getCurrentUser();
@@ -82,7 +82,7 @@ public class UserController {
     /**
      * delete user info by batch
      */
-    @HoneyLogs(operation = "user", type = LogType.BATCH_DELETE)
+    @SysLogs(operation = "user", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {  //  [7, 8]
         User currentUser = TokenUtils.getCurrentUser();

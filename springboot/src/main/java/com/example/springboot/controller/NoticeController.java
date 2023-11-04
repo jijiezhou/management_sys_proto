@@ -82,19 +82,20 @@ public class NoticeController {
     }
 
     /**
-     * 查询用户公告
-     * @return 用户公告
+     * select User Notice
+     * @return User Notice
      */
     @GetMapping("/selectUserData")
     public Result selectUserData() {
         QueryWrapper<Notice> queryWrapper = new QueryWrapper<Notice>().orderByDesc("id");
-        queryWrapper.eq("open", 1); // 用户只能看到公开的公告数据
+        //user can only see isOpen=true
+        queryWrapper.eq("open", 1);
         List<Notice> userList = noticeService.list(queryWrapper);
         return Result.success(userList);
     }
 
     /**
-     * 根据ID查询信息
+     * select user by Id
      */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {

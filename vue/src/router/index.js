@@ -22,9 +22,9 @@ const routes = [
       { path: 'person', name: 'Person', meta: { name: 'Personal Info' }, component: () => import('../views/manager/Person') },
       { path: 'password', name: 'Password', meta: { name: 'Change Password' }, component: () => import('../views/manager/Password') },
       { path: 'news', name: 'News', meta: { name: 'News Info' }, component: () => import('../views/manager/News') },
-      { path: 'newsDetail', name: 'NewsDetail', meta: { name: '新闻详情' }, component: () => import('../views/manager/NewsDetail') },
-      { path: 'notice', name: 'Notice', meta: { name: '系统公告' }, component: () => import('../views/manager/Notice') },
-      { path: 'logs', name: 'Logs', meta: { name: '系统日志' }, component: () => import('../views/manager/Logs') },
+      { path: 'newsDetail', name: 'NewsDetail', meta: { name: 'News Detail' }, component: () => import('../views/manager/NewsDetail') },
+      { path: 'notice', name: 'Notice', meta: { name: 'System Notice' }, component: () => import('../views/manager/Notice') },
+      { path: 'logs', name: 'Logs', meta: { name: 'System Log' }, component: () => import('../views/manager/Logs') },
       { path: 'charts', name: 'Charts', meta: { name: '数据统计' }, component: () => import('../views/manager/Charts') },
       { path: 'orders', name: 'Orders', meta: { name: '订单管理' }, component: () => import('../views/manager/Orders') },
     ]

@@ -1,11 +1,11 @@
 package com.example.springboot.common;
 
 /**
- * 系统日志的操作类型枚举
+ * Enum operation for Logs
  */
 public enum LogType {
 
-    ADD("新增"),UPDATE("修改"),DELETE("删除"), BATCH_DELETE("批量删除"),LOGIN("登录"),REGISTER("注册");
+    ADD("add"),UPDATE("update"),DELETE("delete"), BATCH_DELETE("batch_delete"),LOGIN("login"),REGISTER("register");
 
     private String value;
 

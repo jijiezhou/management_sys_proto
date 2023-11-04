@@ -21,7 +21,7 @@
             </template>
             <el-menu-item index="/user" v-if="user.role === 'admin'">User Info</el-menu-item>
             <el-menu-item index="/news">News Info</el-menu-item>
-            <el-menu-item index="/notice" v-if="user.role === 'admin'">系统公告</el-menu-item>
+            <el-menu-item index="/notice" v-if="user.role === 'admin'">System Notice</el-menu-item>
             <el-menu-item index="/logs" v-if="user.role === 'admin'">System Log</el-menu-item>
             <el-menu-item index="/charts" v-if="user.role === 'admin'">数据统计</el-menu-item>
             <el-menu-item index="/orders">订单管理</el-menu-item>

@@ -28,9 +28,15 @@ public class LogsAspect {
     @Resource
     LogsService logsService;
 
+    /**
+     * operation log
+     * @param joinPoint
+     * @param honeyLogs
+     * @param jsonResult
+     */
     @AfterReturning(pointcut = "@annotation(honeyLogs)", returning = "jsonResult")
     public void recordLog(JoinPoint joinPoint, HoneyLogs honeyLogs, Object jsonResult) {
-        // 获取当前登录的用户的信息
+        // get current login user info
         User loginUser = TokenUtils.getCurrentUser();
         if (loginUser == null) { // 用户未登录的情况下  loginUser是null  是null的话我们就要从参数里面获取操作人信息
             // 登录、注册

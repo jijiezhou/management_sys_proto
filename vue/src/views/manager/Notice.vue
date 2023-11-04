@@ -138,25 +138,28 @@ export default {
       this.form = {}  // 新增数据的时候清空数据
       this.fromVisible = true   // 打开弹窗
     },
-    save() {   // 保存按钮触发的逻辑  它会触发新增或者更新
+    //The logic triggered by the save button will trigger new or updated
+    //save with validation
+    save() {
       this.$refs.formRef.validate((valid) => {
         if (valid) {
           this.sendSaveRequest()
         }
       })
     },
+    //save without validation
     sendSaveRequest() {
       this.$request({
         url: this.form.id ? '/notice/update' : '/notice/add',
         method: this.form.id ? 'PUT' : 'POST',
         data: this.form
       }).then(res => {
-        if (res.code === '200') {  // 表示成功保存
-          this.$message.success('保存成功')
+        if (res.code === '200') {  // save success
+          this.$message.success('save success')
           this.load(1)
           this.fromVisible = false
         } else {
-          this.$message.error(res.msg)  // 弹出错误的信息
+          this.$message.error(res.msg)  // log error info
         }
       })
     },

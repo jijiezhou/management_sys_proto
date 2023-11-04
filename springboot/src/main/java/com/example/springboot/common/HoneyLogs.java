@@ -6,8 +6,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface HoneyLogs {
-    // 操作的模块
+    // operation name
     String operation();
-    // 操作类型
+
+    // operation type(ENUM)
     LogType type();
 }

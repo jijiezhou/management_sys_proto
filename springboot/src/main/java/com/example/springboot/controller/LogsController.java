@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 系统日志相关接口
+ * System Logs-related interface
  */
 @RestController
 @RequestMapping("/logs")
@@ -27,7 +27,7 @@ public class LogsController {
 
 
     /**
-     * 删除信息
+     * Delete Logs
      */
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
@@ -37,7 +37,7 @@ public class LogsController {
 
 
     /**
-     * 批量删除信息
+     * Delete Logs by Batch
      */
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {
@@ -46,9 +46,9 @@ public class LogsController {
     }
 
     /**
-     * 多条件模糊查询信息
-     * pageNum 当前的页码
-     * pageSize 每页查询的个数
+     * Multi-condition vague query
+     * pageNum current page number
+     * pageSize number of items per page
      */
     @GetMapping("/selectByPage")
     public Result selectByPage(@RequestParam Integer pageNum,
@@ -56,7 +56,7 @@ public class LogsController {
                                @RequestParam String operation,
                                @RequestParam String type,
                                @RequestParam String user) {
-        QueryWrapper<Logs> queryWrapper = new QueryWrapper<Logs>().orderByDesc("id");  // 默认倒序，让最新的数据在最上面
+        QueryWrapper<Logs> queryWrapper = new QueryWrapper<Logs>().orderByDesc("id");  // default: newest on the top
         queryWrapper.like(StrUtil.isNotBlank(operation), "operation", operation);
         queryWrapper.like(StrUtil.isNotBlank(type), "type", type);
         queryWrapper.like(StrUtil.isNotBlank(user), "user", user);

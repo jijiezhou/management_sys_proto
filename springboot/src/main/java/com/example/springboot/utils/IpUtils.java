@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 public class IpUtils {
 
     /**
-     * 获取IP地址
+     * Get IP address
      * @param request
      * @return
      */

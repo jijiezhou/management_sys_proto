@@ -62,7 +62,7 @@ export default {
     return {
       tableData: [],  // all data
       pageNum: 1,   // current page
-      pageSize: 5,  // number of items in one page
+      pageSize: 12,  // number of items in one page
       operation: '',
       total: 0,
       form: {},

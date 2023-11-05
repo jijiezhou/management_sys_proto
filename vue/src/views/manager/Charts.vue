@@ -28,7 +28,7 @@ import * as echarts from 'echarts'
 
 const option = {
   title: {
-    text: '订单销售的趋势图',
+    text: 'Orders Trends',
     left: 'center'
   },
   tooltip: {
@@ -39,24 +39,30 @@ const option = {
   },
   xAxis: {
     type: 'category',
-    data: []
+    data: ['Fruits', 'Snack', 'Drinks', 'Milk', 'Daily']
   },
   yAxis: {
     type: 'value'
   },
   series: [
     {
-      name: '金额',
-      data: [],
+      name: 'Price',
+      data: [800, 720, 500, 340, 980],
       type: 'line',
       smooth: true
     },
+    {
+      name: 'Number',
+      data: [100, 200, 204, 209, 590, 698, 700],
+      type: 'line',
+      smooth: true
+    }
   ]
 }
 
 const option1 = {
   title: {
-    text: '订单销售的柱状图',
+    text: 'Orders Sales',
     left: 'center'
   },
   tooltip: {
@@ -67,15 +73,15 @@ const option1 = {
   },
   xAxis: {
     type: 'category',
-    data: []
+    data: ['Fruits', 'Snack', 'Drinks', 'Milk', 'Daily']
   },
   yAxis: {
     type: 'value'
   },
   series: [
     {
-      name: '金额',
-      data: [],
+      name: 'Money',
+      data: [820, 932, 934, 1290, 1330, 1320],
       type: 'bar',
       smooth: true
     }
@@ -84,8 +90,8 @@ const option1 = {
 
 const option2 = {
   title: {
-    text: '订单销售统计',
-    subtext: '比例图',
+    text: 'Order Sales',
+    subtext: 'Percentage',
     left: 'center'
   },
   tooltip: {
@@ -97,11 +103,17 @@ const option2 = {
   },
   series: [
     {
-      name: '金额',
+      name: 'Price',
       type: 'pie',
       center: ['50%', '60%'],
       radius: '50%',
-      data: [],
+      data: [
+        { value: 1048, name: 'Search Engine' },
+        { value: 735, name: 'Direct' },
+        { value: 580, name: 'Email' },
+        { value: 484, name: 'Union Ads' },
+        { value: 300, name: 'Video Ads' }
+      ],
       label: {
         show: true,
         formatter(param) {
@@ -124,14 +136,15 @@ export default {
   data() {
     return {}
   },
-  mounted() {  // 等待页面的元素全部加载完成之后再初始化
+  //Wait for all elements of the page to be loaded before initializing.
+  mounted() {
 
-    // 折线图
+    // lineChart
     let linetDom = document.getElementById('line');
     let lineChart = echarts.init(linetDom);
+    lineChart.setOption(option)
 
-
-    // 柱状图
+    // barChart
     let barDom = document.getElementById('bar');
     let barChart = echarts.init(barDom);
     barChart.setOption(option1)
@@ -141,6 +154,7 @@ export default {
     let pieChart = echarts.init(pieDom);
     pieChart.setOption(option2)
 
+    /**
     this.$request.get('/charts').then(res => {
       // 折线
       option.xAxis.data = res.data?.line?.map(v => v.date) || []
@@ -155,7 +169,7 @@ export default {
       // 饼图
       option2.series[0].data = res.data?.bar || []
       pieChart.setOption(option2)
-    })
+    })**/
   },
   methods: {}
 }

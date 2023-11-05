@@ -29,12 +29,12 @@ public class OrdersController {
     UserService userService;
 
     /**
-     * 新增信息
+     * Add Orders
      */
-    @SysLogs(operation = "订单", type = LogType.ADD)
+    @SysLogs(operation = "orders", type = LogType.ADD)
     @PostMapping("/add")
     public Result add(@RequestBody Orders orders) {
-        User currentUser = TokenUtils.getCurrentUser();  // 获取到当前登录的用户信息
+        User currentUser = TokenUtils.getCurrentUser();  // get current login user info
         orders.setUserid(currentUser.getId());
         orders.setDate(DateUtil.today());  //   2023-10-08
         orders.setNo(IdUtil.fastSimpleUUID());
@@ -43,9 +43,9 @@ public class OrdersController {
     }
 
     /**
-     * 修改信息
+     * Edit Orders
      */
-    @SysLogs(operation = "订单", type = LogType.UPDATE)
+    @SysLogs(operation = "orders", type = LogType.UPDATE)
     @PutMapping("/update")
     public Result update(@RequestBody Orders orders) {
         ordersService.updateById(orders);
@@ -53,20 +53,19 @@ public class OrdersController {
     }
 
     /**
-     * 删除信息
+     * Delete Orders
      */
-    @SysLogs(operation = "订单", type = LogType.DELETE)
+    @SysLogs(operation = "orders", type = LogType.DELETE)
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         ordersService.removeById(id);
         return Result.success();
     }
 
-
     /**
-     * 批量删除信息
+     * Delete Orders By Batch
      */
-    @SysLogs(operation = "订单", type = LogType.BATCH_DELETE)
+    @SysLogs(operation = "orders", type = LogType.BATCH_DELETE)
     @DeleteMapping("/delete/batch")
     public Result batchDelete(@RequestBody List<Integer> ids) {
         ordersService.removeBatchByIds(ids);
@@ -74,7 +73,7 @@ public class OrdersController {
     }
 
     /**
-     * 查询全部信息
+     * Select All Info about Orders
      */
     @GetMapping("/selectAll")
     public Result selectAll() {
@@ -83,7 +82,7 @@ public class OrdersController {
     }
 
     /**
-     * 根据ID查询信息
+     * Select By Order Id
      */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
@@ -97,15 +96,15 @@ public class OrdersController {
 
 
     /**
-     * 多条件模糊查询信息
-     * pageNum 当前的页码
-     * pageSize 每页查询的个数
+     * multi-condition query
+     * pageNum current page
+     * pageSize number of items each page
      */
     @GetMapping("/selectByPage")
     public Result selectByPage(@RequestParam Integer pageNum,
                                @RequestParam Integer pageSize,
                                @RequestParam String name) {
-        QueryWrapper<Orders> queryWrapper = new QueryWrapper<Orders>().orderByDesc("id");  // 默认倒序，让最新的数据在最上面
+        QueryWrapper<Orders> queryWrapper = new QueryWrapper<Orders>().orderByDesc("id");  // default, newest on top
         queryWrapper.like(StrUtil.isNotBlank(name), "name", name);
         Page<Orders> page = ordersService.page(new Page<>(pageNum, pageSize), queryWrapper);
         List<Orders> records = page.getRecords();
@@ -118,6 +117,4 @@ public class OrdersController {
         }
         return Result.success(page);
     }
-
-
 }

@@ -24,6 +24,7 @@
 </template>
 
 <script>
+
 import * as echarts from 'echarts'
 
 const option = {
@@ -39,7 +40,7 @@ const option = {
   },
   xAxis: {
     type: 'category',
-    data: ['Fruits', 'Snack', 'Drinks', 'Milk', 'Daily']
+    data: []
   },
   yAxis: {
     type: 'value'
@@ -47,16 +48,10 @@ const option = {
   series: [
     {
       name: 'Price',
-      data: [800, 720, 500, 340, 980],
+      data: [],
       type: 'line',
       smooth: true
     },
-    {
-      name: 'Number',
-      data: [100, 200, 204, 209, 590, 698, 700],
-      type: 'line',
-      smooth: true
-    }
   ]
 }
 
@@ -73,7 +68,7 @@ const option1 = {
   },
   xAxis: {
     type: 'category',
-    data: ['Fruits', 'Snack', 'Drinks', 'Milk', 'Daily']
+    data: []
   },
   yAxis: {
     type: 'value'
@@ -81,7 +76,7 @@ const option1 = {
   series: [
     {
       name: 'Money',
-      data: [820, 932, 934, 1290, 1330, 1320],
+      data: [],
       type: 'bar',
       smooth: true
     }
@@ -149,27 +144,26 @@ export default {
     let barChart = echarts.init(barDom);
     barChart.setOption(option1)
 
-    // 饼图
+    // pieChart
     let pieDom = document.getElementById('pie');
     let pieChart = echarts.init(pieDom);
     pieChart.setOption(option2)
 
-    /**
     this.$request.get('/charts').then(res => {
-      // 折线
+      // lineChart
       option.xAxis.data = res.data?.line?.map(v => v.date) || []
       option.series[0].data = res.data?.line?.map(v => v.value) || []
       lineChart.setOption(option)
 
-      // 柱状图
+      // barChart
       option1.xAxis.data = res.data?.bar?.map(v => v.name) || []
       option1.series[0].data = res.data?.bar?.map(v => v.value) || []
       barChart.setOption(option1)
 
-      // 饼图
+      // pieChart
       option2.series[0].data = res.data?.bar || []
       pieChart.setOption(option2)
-    })**/
+    })
   },
   methods: {}
 }

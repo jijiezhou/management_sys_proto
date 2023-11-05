@@ -3,7 +3,7 @@ package com.example.springboot.service.aop;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ArrayUtil;
-import com.example.springboot.common.HoneyLogs;
+import com.example.springboot.common.SysLogs;
 import com.example.springboot.entity.Logs;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.LogsService;
@@ -29,13 +29,13 @@ public class LogsAspect {
     LogsService logsService;
 
     /**
-     * operation log
+     * operation logs
      * @param joinPoint
-     * @param honeyLogs
+     * @param sysLogs
      * @param jsonResult
      */
-    @AfterReturning(pointcut = "@annotation(honeyLogs)", returning = "jsonResult")
-    public void recordLog(JoinPoint joinPoint, HoneyLogs honeyLogs, Object jsonResult) {
+    @AfterReturning(pointcut = "@annotation(sysLogs)", returning = "jsonResult")
+    public void recordLog(JoinPoint joinPoint, SysLogs sysLogs, Object jsonResult) {
         // already login: get current login user info
         User loginUser = TokenUtils.getCurrentUser();
         // not login -> loginUser is null, we need get user from params
@@ -61,8 +61,8 @@ public class LogsAspect {
         // Assembling Logs entity
         Logs logs = Logs.builder()
                 .user(loginUser.getUsername())
-                .operation(honeyLogs.operation())
-                .type(honeyLogs.type().getValue())
+                .operation(sysLogs.operation())
+                .type(sysLogs.type().getValue())
                 .ip(ipAddr)
                 .time(DateUtil.now())
                 .build();

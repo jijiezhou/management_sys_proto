@@ -53,6 +53,7 @@ public class WebController {
 
     /**
      * register
+     *
      * @param user
      * @return
      */
@@ -85,31 +86,36 @@ public class WebController {
     }
 
     /**
-     * 获取统计图数据
-     * @return 动态数据
+     * Get Dynamic Echarts
+     *
+     * @return Dynamic Echart
      */
     @GetMapping("/charts")
     public Result charts() {
-        // 包装折线图的数据
-        List<Orders> list = ordersService.list();
-        Set<String> dates = list.stream().map(Orders::getDate).collect(Collectors.toSet());
-        List<String> dateList = CollUtil.newArrayList(dates);
-        dateList.sort(Comparator.naturalOrder());
-        List<Dict> lineList = new ArrayList<>();
+        // Wrapping data for a line chart
+        List<Orders> list = ordersService.list(); //list of Orders
+        Set<String> dates = list.stream().map(Orders::getDate).collect(Collectors.toSet()); //set of dates(no duplicate)
+        List<String> dateList = CollUtil.newArrayList(dates); //list of dates
+        dateList.sort(Comparator.naturalOrder()); //ascending
+        List<Dict> lineList = new ArrayList<>(); //map
+
         for (String date : dateList) {
-            // 统计当前日期的所有金额总数和
+            // Count the total sum of total money of all orders in the same date
+            // 1. first filter orders with same date
+            // 2. then get their money
+            // 3. sum
             BigDecimal sum = list.stream().filter(orders -> orders.getDate().equals(date)).map(Orders::getMoney)
                     .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-            Dict dict = Dict.create();
+            Dict dict = Dict.create(); //map
             Dict line = dict.set("date", date).set("value", sum);
             lineList.add(line);
         }
 
-        // 柱状图数据
+        // barCharts
         List<Dict> barList = new ArrayList<>();
         Set<String> categories = list.stream().map(Orders::getCategory).collect(Collectors.toSet());
         for (String cate : categories) {
-            // 统计当前日期的所有金额总数和
+            //Count the total sum of all amounts on the current date
             BigDecimal sum = list.stream().filter(orders -> orders.getCategory().equals(cate)).map(Orders::getMoney)
                     .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
             Dict dict = Dict.create();
@@ -117,8 +123,7 @@ public class WebController {
             barList.add(bar);
         }
 
-
-        // 包装所有数据
+        // wrapping all data
         Dict res = Dict.create().set("line", lineList).set("bar", barList);
         return Result.success(res);
     }
